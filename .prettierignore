@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.*
+!.env.example
+apps/api/uploads/
+apps/web/public/models/*.glb
+apps/web/public/models/*.gltf
+.mysql-data*/
+.mysql-dev.ini
+项目提示词与需求评审.md
+需求文档.md

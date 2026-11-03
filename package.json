@@ -1,0 +1,27 @@
+{
+  "name": "home-design-platform",
+  "private": true,
+  "version": "0.1.0",
+  "description": "2D editable home design platform with read-only 3D preview",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @home-design/web",
+    "dev:api": "npm run start:dev --workspace @home-design/api",
+    "build": "npm run build -w @home-design/plan-schema && npm run build -w @home-design/api && npm run build -w @home-design/web",
+    "typecheck": "npm run build -w @home-design/plan-schema && npm run typecheck -w @home-design/api && npm run typecheck -w @home-design/web",
+    "test": "npm run test -w @home-design/plan-schema && npm run test -w @home-design/api && npm run test -w @home-design/web",
+    "test:smoke": "node tests/smoke.mjs",
+    "test:editor": "node tests/editor-interactions.mjs",
+    "migration:run": "npm run migration:run -w @home-design/api",
+    "migration:revert": "npm run migration:revert -w @home-design/api",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "playwright-core": "^1.63.0",
+    "prettier": "^3.5.3"
+  }
+}

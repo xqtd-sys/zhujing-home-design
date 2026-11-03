@@ -1,0 +1,32 @@
+{
+  "name": "@home-design/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "typecheck": "vue-tsc -b --noEmit",
+    "test": "node --experimental-strip-types --test src/editor/*.test.mjs"
+  },
+  "dependencies": {
+    "@home-design/plan-schema": "0.1.0",
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "axios": "^1.8.4",
+    "element-plus": "^2.9.5",
+    "konva": "^9.3.22",
+    "pinia": "^3.0.1",
+    "three": "^0.175.0",
+    "vue": "^3.5.13",
+    "vue-konva": "^3.2.0",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/three": "^0.175.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.2",
+    "vue-tsc": "^2.2.8"
+  }
+}

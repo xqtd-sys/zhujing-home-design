@@ -28,6 +28,8 @@ async function submit() {
   try {
     await auth.login(form.identity.trim(), form.password)
     await router.push({ name: 'plans' })
+  } catch {
+    // 错误提示由 apiClient 响应拦截器统一给出，这里只负责结束 loading 状态
   } finally {
     loading.value = false
   }

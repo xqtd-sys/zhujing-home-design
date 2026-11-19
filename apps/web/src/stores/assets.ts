@@ -35,6 +35,8 @@ export const useAssetsStore = defineStore('assets', () => {
         depth: asset.baseDepth,
         height: asset.baseHeight,
         color: asset.defaultColor,
+        iconUrl: asset.iconUrl ?? null,
+        modelUrl: asset.modelUrl ?? null,
       }))
       loaded.value = true
     } finally {

@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import RoomIllustration from './RoomIllustration.vue'
+import BlueprintPlan from './BlueprintPlan.vue'
 import BrandMark from './BrandMark.vue'
+import ThemeToggle from './ThemeToggle.vue'
 </script>
 
 <template>
   <main class="auth-page">
+    <ThemeToggle class="auth-theme-toggle" />
     <section class="auth-story">
       <div class="auth-wordmark">
         <BrandMark /><span>筑建设计平台</span>
@@ -14,17 +16,25 @@ import BrandMark from './BrandMark.vue'
         <h2>理想的家，<br />从你的想象开始。</h2>
         <p>画下空间，摆放生活。<br />让每一个关于家的想法，都看得见。</p>
       </div>
-      <RoomIllustration class="auth-scene" />
+      <BlueprintPlan class="auth-scene" />
       <div class="auth-story-footer">
         <span>01 / 绘制户型</span><span>02 / 布置空间</span><span>03 / 预览新家</span>
       </div>
     </section>
     <section class="auth-form-side">
+      <div class="auth-form-decor" aria-hidden="true">
+        <span class="auth-orb auth-orb-a" />
+        <span class="auth-orb auth-orb-b" />
+        <span class="auth-watermark">筑境</span>
+      </div>
       <div class="auth-panel">
         <p class="eyebrow">筑境设计平台</p>
         <slot />
       </div>
       <p class="auth-footnote">把生活的样子，设计成喜欢的样子。</p>
+      <div class="auth-features" aria-hidden="true">
+        <span>户型绘制</span><span>3D 实时预览</span><span>云端保存</span>
+      </div>
     </section>
   </main>
 </template>

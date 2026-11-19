@@ -164,6 +164,7 @@ try {
   await scenario('panning over furniture and windows preserves saved geometry', async ({ page, click, drag, save }) => {
     await page.getByRole('button', { name: '窗', exact: true }).click()
     await click(300, 400)
+    await page.getByRole('button', { name: '家具', exact: true }).click()
     await page.getByRole('button', { name: '沙发', exact: true }).dblclick()
     const before = structuredClone(await save())
     const furniture = before.furniture[0]
@@ -296,6 +297,7 @@ try {
       await click(180, 400)
       await page.getByRole('button', { name: '窗', exact: true }).click()
       await click(400, 400)
+      await page.getByRole('button', { name: '家具', exact: true }).click()
       await page.getByRole('button', { name: '沙发', exact: true }).dblclick()
       await page.getByRole('button', { name: '墙体', exact: true }).click()
       await page.getByRole('button', { name: '撤销', exact: true }).click()
@@ -314,9 +316,9 @@ try {
         if (width <= 760) {
           assert.equal(await page.locator('.asset-library').isVisible(), false)
           assert.equal(await page.locator('.properties-content').isVisible(), false)
-          await page.getByRole('button', { name: /家具素材.*展开/ }).click()
+          await page.getByRole('button', { name: /墙体.*展开/ }).click()
           assert.equal(await page.locator('.asset-library').isVisible(), true)
-          await page.getByRole('button', { name: /家具素材.*收起/ }).click()
+          await page.getByRole('button', { name: /墙体.*收起/ }).click()
           await page.getByRole('button', { name: /空间属性.*展开/ }).click()
           assert.equal(await page.locator('.properties-content').isVisible(), true)
           assert.ok(
@@ -393,6 +395,7 @@ try {
       const roomDraft = JSON.parse(await draft())
       assert.ok(roomDraft.documentJson.rooms.every((room) => room.polygon.every((point) => point.x >= 0 && point.y >= 0)))
       await page.keyboard.press('Escape')
+      await page.getByRole('button', { name: '家具', exact: true }).click()
       await page.getByRole('button', { name: '沙发', exact: true }).dblclick()
       const furnitureDraft = JSON.parse(await draft())
       assert.ok(furnitureDraft.documentJson.furniture.every((item) => item.position.x >= 0 && item.position.y >= 0))
@@ -411,13 +414,23 @@ try {
     async ({ page, count, save }) => {
       await page.getByRole('button', { name: '定位设计', exact: true }).click()
       const bounds = await page.locator('.floorplan-canvas').boundingBox()
-      // The two walls are centered around (9750, 250), with the same padding as locate design.
-      const center = { x: bounds.x + 64 + (bounds.width - 96) / 2, y: bounds.y + 70 + (bounds.height - 166) / 2 }
-      const click = (x, y) => page.mouse.click(center.x + x - 9750, center.y + y - 250)
+      // locateDesign() clamps the fitted pan offset, so read the real world-layer transform
+      // instead of re-deriving it: logical (9750, 250) is the centre of the two walls.
+      const world = await page.evaluate(() => {
+        const layer = window.Konva.stages[0].getLayers()[0]
+        return { x: layer.x(), y: layer.y(), zoom: layer.scaleX() }
+      })
+      const toScreen = (x, y) => ({
+        x: bounds.x + world.x + x * world.zoom,
+        y: bounds.y + world.y + y * world.zoom,
+      })
+      const click = (x, y) => page.mouse.click(toScreen(x, y).x, toScreen(x, y).y)
       const drag = async (x, y, dx, dy) => {
-        await page.mouse.move(center.x + x - 9750, center.y + y - 250)
+        const from = toScreen(x, y)
+        const to = toScreen(x + dx, y + dy)
+        await page.mouse.move(from.x, from.y)
         await page.mouse.down()
-        await page.mouse.move(center.x + x + dx - 9750, center.y + y + dy - 250, { steps: 8 })
+        await page.mouse.move(to.x, to.y, { steps: 8 })
         await page.mouse.up()
       }
       const canvasImage = () =>
@@ -435,9 +448,13 @@ try {
       await drag(9750, 100, 300, 0)
       assert.equal(await canvasImage(), wallImage, 'rejected wall must return to its original position')
       assert.equal(await page.getByRole('button', { name: '保存', exact: true }).isEnabled(), false)
+      await page.getByRole('button', { name: '家具', exact: true }).click()
       await page.getByRole('button', { name: '沙发', exact: true }).dblclick()
       const withFurniture = structuredClone(await save())
       const pos = withFurniture.furniture[0].position
+      // 拖动会顺手选中家具，选中态会改画它的尺寸标签和描边；先点一下把基线定在"已选中"，
+      // 否则截图差异来自选中高亮而不是位置变化。
+      await click(pos.x, pos.y)
       const furnitureImage = await canvasImage()
       await drag(pos.x, pos.y, 400, 0)
       assert.equal(await canvasImage(), furnitureImage, 'rejected furniture must return to its original position')

@@ -198,7 +198,7 @@ export const EMPTY_PLAN_DOCUMENT: PlanDocument = {
     gridSize: 10,
     snapEnabled: true,
     defaultWallHeight: 280,
-    defaultWallThickness: 20,
+    defaultWallThickness: 10,
     defaultWallMaterialId: 'wall-white',
     defaultFloorMaterialId: 'floor-light',
   },

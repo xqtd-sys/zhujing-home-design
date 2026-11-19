@@ -7,7 +7,7 @@ import { createPlan, deletePlan, importPlan, listPlans, updatePlanVisibility } f
 import { listDiscoverPlans } from '../api/discover'
 import AppHeader from '../components/AppHeader.vue'
 import PlanThumbnail from '../components/PlanThumbnail.vue'
-import RoomIllustration from '../components/RoomIllustration.vue'
+import BlueprintPlan from '../components/BlueprintPlan.vue'
 import type { DiscoverPlanSummary, PlanSummary } from '../types/api'
 import { clearDesignClipboard, readDesignClipboard, type DesignClipboard } from '../editor/design-clipboard'
 
@@ -127,7 +127,7 @@ async function pasteDesign() {
           <h1>把关于家的灵感，<br />慢慢变成生活。</h1>
           <p>从一面墙到一个家，在这里继续你的创作。</p>
         </div>
-        <RoomIllustration class="welcome-scene" />
+        <BlueprintPlan class="welcome-scene" />
       </section>
       <template v-if="showAll">
       <el-button text :icon="ArrowLeft" class="page-back-button" @click="router.push({ name: 'plans' })">返回工作台</el-button>
@@ -226,7 +226,7 @@ async function pasteDesign() {
                 </div>
               </article>
               <button v-if="total >= 7" class="more-plan-tile" type="button" aria-label="查看更多我的设计" @click="router.push({ name: 'plans-all' })">
-                <RoomIllustration class="more-plan-illustration" />
+                <BlueprintPlan class="more-plan-illustration" />
                 <span class="more-plan-overlay" />
                 <span class="more-plan-label">查看更多 <span aria-hidden="true">↗</span></span>
               </button>
@@ -258,7 +258,7 @@ async function pasteDesign() {
                 <div class="plan-meta"><span>♡ {{ plan.likeCount }}</span><span>只读查看 ↗</span></div>
               </article>
               <button v-if="discoverTotal >= 7" class="more-plan-tile" type="button" aria-label="查看更多公开发现" @click="router.push({ name: 'discover' })">
-                <RoomIllustration class="more-plan-illustration" />
+                <BlueprintPlan class="more-plan-illustration" />
                 <span class="more-plan-overlay" />
                 <span class="more-plan-label">查看更多 <span aria-hidden="true">↗</span></span>
               </button>

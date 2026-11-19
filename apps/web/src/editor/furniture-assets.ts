@@ -6,6 +6,10 @@ export type FurnitureAsset = {
   depth: number
   height: number
   color: string
+  /** 缩略图地址（本站 public 下的本地图片或外链）；为空时用内置矢量图。 */
+  iconUrl?: string | null
+  /** 3D 模型地址（GLB/GLTF），后续阶段使用。 */
+  modelUrl?: string | null
 }
 
 export type FurnitureCategory = { id: string; name: string; sortOrder: number }
@@ -26,6 +30,7 @@ export const FALLBACK_FURNITURE_ASSETS: FurnitureAsset[] = [
     depth: 90,
     height: 85,
     color: '#94b5a5',
+    iconUrl: '/furniture/sofa.jpg',
   },
   {
     id: 'a2222222-2222-4222-8222-222222222222',
@@ -35,6 +40,7 @@ export const FALLBACK_FURNITURE_ASSETS: FurnitureAsset[] = [
     depth: 200,
     height: 55,
     color: '#b8aa91',
+    iconUrl: '/furniture/bed.jpg',
   },
   {
     id: 'a3333333-3333-4333-8333-333333333333',
@@ -44,6 +50,7 @@ export const FALLBACK_FURNITURE_ASSETS: FurnitureAsset[] = [
     depth: 80,
     height: 75,
     color: '#a88e72',
+    iconUrl: '/furniture/dining-table.jpg',
   },
   {
     id: 'a4444444-4444-4444-8444-444444444444',
@@ -53,5 +60,6 @@ export const FALLBACK_FURNITURE_ASSETS: FurnitureAsset[] = [
     depth: 45,
     height: 200,
     color: '#8d9b91',
+    iconUrl: '/furniture/cabinet.jpg',
   },
 ]

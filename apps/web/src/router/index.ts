@@ -3,7 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    // 启动第一屏直接进入可用的工作区，不把 demo 页或营销页当首页。
     { path: '/', redirect: '/plans' },
+    // 这套昼夜样式的原始样张，保留成可访问的风格参考页，不再占启动入口。
+    { path: '/style-demo', name: 'style-demo', component: () => import('../views/HomeView.vue') },
     { path: '/login', name: 'login', component: () => import('../views/LoginView.vue'), meta: { guest: true } },
     {
       path: '/register',

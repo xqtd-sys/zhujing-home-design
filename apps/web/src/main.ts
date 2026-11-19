@@ -4,6 +4,7 @@ import ElementPlus from 'element-plus'
 import VueKonva from 'vue-konva'
 import 'element-plus/dist/index.css'
 import './styles.css'
+import './theme.css'
 import App from './App.vue'
 import router from './router'
 

@@ -102,8 +102,8 @@ onBeforeUnmount(() => {
         v-for="room in document.rooms"
         :key="room.id"
         :points="room.polygon.map((p) => `${p.x},${p.y}`).join(' ')"
-        fill="#e4dac5"
-        stroke="#c4b99e"
+        fill="var(--thumb-room)"
+        stroke="var(--thumb-room-line)"
         stroke-width="2"
       />
       <line
@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
         :y1="wall.start.y"
         :x2="wall.end.x"
         :y2="wall.end.y"
-        stroke="#455b50"
+        stroke="var(--thumb-wall)"
         :stroke-width="wall.thickness"
         stroke-linecap="square"
       />
@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
         v-for="opening in openings"
         :key="opening.id"
         v-bind="{ x1: opening.x1, y1: opening.y1, x2: opening.x2, y2: opening.y2 }"
-        :stroke="opening.type === 'door' ? '#faf8f2' : '#a8c4c1'"
+        :stroke="opening.type === 'door' ? 'var(--thumb-door)' : 'var(--thumb-window)'"
         :stroke-width="opening.thickness + 1"
       />
       <g
@@ -135,13 +135,13 @@ onBeforeUnmount(() => {
           :width="item.width"
           :height="item.depth"
           rx="6"
-          fill="#a7b9a8"
-          stroke="#637e69"
+          fill="var(--thumb-furn)"
+          stroke="var(--thumb-furn-line)"
           stroke-width="3"
         />
         <path
           :d="`M${-item.width / 2 + 8},${-item.depth / 2 + 12}h${Math.max(0, item.width - 16)}`"
-          stroke="#dce5d8"
+          stroke="var(--thumb-furn-hi)"
           stroke-width="4"
         />
       </g>

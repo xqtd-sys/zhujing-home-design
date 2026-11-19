@@ -3,6 +3,7 @@ import { DataBoard, SwitchButton, User } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 import BrandMark from './BrandMark.vue'
+import ThemeToggle from './ThemeToggle.vue'
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -30,6 +31,7 @@ function logout() {
       >
         <span class="account-name">{{ auth.user?.nickname ?? auth.user?.username }}</span>
       </el-button>
+      <ThemeToggle />
       <el-button plain :icon="SwitchButton" @click="logout">退出</el-button>
     </div>
   </header>

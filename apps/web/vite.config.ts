@@ -18,6 +18,11 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    // Windows 上编辑器/工具会往源码目录写入 “.xxx.tmpdir/” 临时目录，
+    // chokidar 监听这些被占用文件时会抛 EBUSY 直接拖垮 dev server，这里忽略掉。
+    watch: {
+      ignored: ['**/*.tmpdir/**', '**/.*.tmpdir/**', '**/*.tmp'],
+    },
     proxy: {
       '/api': {
         target: 'http://localhost:3000',
